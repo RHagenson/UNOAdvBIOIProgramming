@@ -1,0 +1,66 @@
+#! /usr/bin/python3
+# Name: Ryan Hagenson
+# Class: BIOI 3500
+# Assignment #: 3
+#
+# Due date: Tuesday, February 10th 
+#
+# Honor Pledge: On my honor as a student of the University of Nebraska at
+#               Omaha, I have neither given nor received unauthorized help on
+#               this programming assignment.
+#
+#    NAME: Ryan Hagenson
+#    NUID: 972
+#    EMAIL: rhagenso@nebrwesleyan.edu
+#    Partners: None
+#
+# This program... 
+
+import getopt
+import sys
+
+def main():
+    INPUT = sys.stdin       # Input file handle; Default: stdin
+    OUTPUT = sys.stdout     # Output file handle; Default: stdout
+    CUTOFF = 70             # The sequence line width, 
+                            # Default: 70 characters wide
+    IncludeSeq = False      # The boolean that control the printing of sequence
+    listRecord = []         # List for spliting each record (ie line)
+    
+    # Directions for usage of this script as a series of print statements
+    def usage():
+        print('Usage: TabToFASTA.py [-i FILE] [-o FILE] [-l width]')
+        print('\t-I:\tinput file (tab-delimited); STDIN if not used.')
+        print('\t-O:\toutput file (FASTA-formatted); STDOUT if not used.')
+        print('\t-S:\tif used, the sequence is included in the output\n', \
+              '\t\t(defaut is to not include the sequence)')
+        print('\t-L:\tsequence width (default is 70 characters wide)')
+        return
+    
+    # Enables command-line arguments via getopt and sys packages
+    try:
+        opts, args = getopt.getopt(sys.argv[1:], 'I:O:SL:')
+    except getopt.GetoptError as err:
+        # Redirect STDERR to STDOUT (ensures screen display)
+        sys.stdout = sys.stderr
+        # Print help information
+        print(str(err))
+        # Print usage information; usage() is the name of a
+        # function (declared elsewhere) that displays usage
+        # information (a series of print statements)
+        usage()
+        # Exit
+        sys.exit(2)
+
+    for (opt, arg) in opts:
+        if (opt == '-I'):
+            INPUT = open(arg, 'r')
+        if (opt == '-O'):
+            OUTPUT = open(arg, 'w')
+        if (opt == '-L'):
+            CUTOFF = int(arg)
+        if (opt == '-S'):
+            IncludeSeq = True
+
+if (__name__ == '__main__'):
+    main()
